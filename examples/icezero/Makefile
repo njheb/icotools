@@ -10,6 +10,9 @@ reset: icezprog
 icezprog: icezprog.c
 	gcc -o icezprog -Wall icezprog.c -lwiringPi -lrt -lstdc++
 
+install_icezprog: icezprog
+	cp icezprog /usr/local/bin/icezprog
+
 icezero.blif: icezero.v memdata.dat defines.vh
 	yosys -p 'synth_ice40 -top top -blif icezero.blif' icezero.v
 
