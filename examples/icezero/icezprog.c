@@ -296,6 +296,10 @@ int main(int argc, char **argv)
 		} while (size == sizeof(buffer));
 	}
 
+	// Release SPI pins so FPGA can take over
+	pinMode(CFG_SS,   INPUT);
+	pinMode(CFG_SCK,  INPUT);
+	pinMode(CFG_SO,   INPUT);
 	digitalWrite(CFG_RST, HIGH);
 	barrier_sync();
 
