@@ -10,6 +10,12 @@ reset: icezprog
 icezprog: icezprog.c
 	gcc -o icezprog -Wall icezprog.c -lwiringPi -lrt -lstdc++
 
+icezprog-0x1000000: icezprog-0x1000000.c
+	gcc -o icezprog-0x1000000 -Wall icezprog-0x1000000.c -lwiringPi -lrt -lstdc++
+
+icezprog-0x830000: icezprog-0x830000.c
+	gcc -o icezprog-0x830000 -Wall icezprog-0x830000.c -lwiringPi -lrt -lstdc++
+
 install_icezprog: icezprog
 	cp icezprog /usr/local/bin/icezprog
 

@@ -1,32 +1,18 @@
+This fork of icotools is only here for the Quick and Dirty hack needed for adding icezero pcb to my Learn-Fpga fork. Will find a better solution if icezero port is adpoted into the main tree Learn-Fpga was forked from.
 
-[Directory icoprog](icoprog/)
------------------------------
+Get hold of WiringPi if it's not already installed and then do the following on your raspberry pi.
 
-Low-level programming tool for IcoBoard. Runs on Raspberry Pi. Usually called
-via SSH from a workstation (unless FPGA bit-streams are generated locally on
-the Raspberry Pi).
 
-[Directory examples](examples/)
+cd examples/icezero/
+
+make icezprog
+
+make icezprog-0x830000
+
+make icezprog-0x1000000
+
+
+[Quick and Dirty Hack Directory](examples/icezero)
 -------------------------------
 
-Small and simple example designs that run on the IcoBoard.
-
-[Directory icosoc](icosoc/)
----------------------------
-
-Simple System-on-Chip (SoC) generator for PicoRV32-based SoCs running on the
-IcoBoard. Including standard components for GPIO, RS232, SPI, ...
-
-[Directory makeimg](makeimg/)
------------------------------
-
-Scripts used to generate Raspbian images with pre-installed icotools, icestorm
-flow, and RISC-V compilers.
-
-[Directory mxoprog](mxoprog/)
------------------------------
-
-Programming tools and image for the MachXO2 auxiliary FPGA on the IcoBoard.
-The MachXO2 on IcoBoards is pre-programmed. No need to use this tool unless
-you want to change the MachXO2 bit-stream.
-
+Slightly more detailed notes [here](examples/icezero/README.md).

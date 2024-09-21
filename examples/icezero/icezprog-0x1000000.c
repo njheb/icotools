@@ -228,9 +228,9 @@ restart:
 int main(int argc, char **argv)
 {
 	if (argc != 2 || (argv[1][0] == '-' && argv[1][1]) || !argv[1][0]) {
-		printf("Usage: %s <binfile>  ... program <binfile> to IceZero flash\n", argv[0]);
+		printf("Usage: %s <binfile>  ... program <binfile> to IceZero flash at offset 0x1000000\n", argv[0]);
 		printf("       %s -          ... program stdin to IceZero flash\n", argv[0]);
-		printf("       %s .          ... erase first sector of IceZero flash\n", argv[0]);
+		//printf("       %s .          ... erase first sector of IceZero flash\n", argv[0]);
 		printf("       %s ..         ... just restart the FPGA\n", argv[0]);
 		return 1;
 	}
@@ -258,7 +258,7 @@ int main(int argc, char **argv)
 		flash_read_id();
 	}
 
-	if (!strcmp(argv[1], "."))
+	/*if (!strcmp(argv[1], "."))
 	{
 		char buffer[1024];
 		int i;
@@ -268,9 +268,9 @@ int main(int argc, char **argv)
 
 		flash_wrsector(0, buffer, sizeof(buffer));
 	}
-	else if (strcmp(argv[1], ".."))
+	else*/ if (strcmp(argv[1], ".."))
 	{
-		int addr = 0, size = 0;
+		int addr = 0x1000000, size = 0;
 		char buffer[64*1024];
 
 		FILE *f = strcmp(argv[1], "-") ? fopen(argv[1], "rb") : stdin;

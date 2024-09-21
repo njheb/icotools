@@ -1,45 +1,41 @@
 
-Simple example project for the IceZero Board
---------------------------------------------
+#Originally simple example project for the IceZero Board
+We are only interested in icezprog and icezprog-0x{offset} variants.
+--------------------------------------------------------------------
 
-This example design outputs the pin description for each IO pin on that IO pin
-using 9600 baud TTL-level RS232 signaling (+3.3V, non-inverted).
-
-This example comes with its own IceZero programming tool (icezprog.c).
+The original example comes with its own IceZero programming tool (icezprog.c).
 
 Original programming script by Kevin M. Hubbard can be found here:
 https://github.com/blackmesalabs/ice_zero_prog
 
+Which was then modified in the 2 parent forks, see those repositories for details.
 
-IceZero Getting Started Guide
------------------------------
+The 2 different offset variants are provided in this fork.
 
-**Step 1:** Get the raspbian image with pre-installed FOSS iCE40 tools:  
-http://files.clifford.at/2017-03-02-raspbian-jessie-icotools.zip
+Quick and dirty hack to support using learn-fpga with trenz icezero.
+--------------------------------------------------------------------
 
-And unzip the file and write the image on a (min 16 GB) SD card. See this link for instructions:  
-https://www.raspberrypi.org/documentation/installation/installing-images/README.md
-
-
--- or --
-
-Install the icestorm toolchain via:
-
-    sudo apt-get install fpga-icestorm arachne-pnr
-
-**Step 2:** Connect your IceZero with your Raspberry Pi or Raspberry Pi Zero and boot
+Connect your IceZero with your Raspberry Pi or Raspberry Pi Zero and boot
 the Raspberry Pi from the SD card.
 
-**Step 2:** Copy the files in this directory onto the Raspberry Pi and build the
-IceZero programming tool:
+Copy the files in this directory onto the Raspberry Pi or mount them by nfs 
+and build the IceZero programming tools (most probably via ssh):
 
+
+    cd icotools/examples/icezero
     make icezprog
+    make icezprog-0x830000
+    make icezprog-0x1000000
 
-and optionally
+NB it really is 0x830000 and not 0x820000 as the fpga part used produces a larger 0 based image than on the icestick.
 
-    sudo make install_icezprog
+The advantage with using nfs is that you can switch on the overlay-fs support via raspi-config
+and give your sd card better protection once you have settled on a stable way of working.
 
-**Step 5:** Build the example design and program it into the IceZero board:
+If you want to install these programs look at how the makefiles install_icezprog works
+otherwise put them in your PATH or pick them up in your working directory with 
+"./iceprog-0x830000 binfile" for example to load the learn-fpga execute from spiflash
+image. Data is loaded at offset 0x1000000 in the learn-fpga examples using 
+"./iceprog-0x1000000 binfile" 
 
-    make prog
-
+This is a stop gap mesaure and if the trenz icezero learn-fpga port is adpoted I'll probably fix things up.
