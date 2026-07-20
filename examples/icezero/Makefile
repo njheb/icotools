@@ -1,23 +1,34 @@
 
-all: icezero.bin
+#all: icezero.bin
+#
+#prog: icezero.bin icezprog
+#	./icezprog icezero.bin
+#
+#reset: icezprog
+#	./icezprog .
 
-prog: icezero.bin icezprog
-	./icezprog icezero.bin
+all: clean-progs bbiceprog icezprog icezprog-0x20000 icezprog-0x30000 icezprog-0x100000 bbiceprog
 
-reset: icezprog
-	./icezprog .
+bbiceprog: bbiceprog.c
+	gcc -o bbiceprog -Wall bbiceprog.c -lwiringPi -lrt -lstdc++
 
 icezprog: icezprog.c
 	gcc -o icezprog -Wall icezprog.c -lwiringPi -lrt -lstdc++
 
-icezprog-0x1000000: icezprog-0x1000000.c
-	gcc -o icezprog-0x1000000 -Wall icezprog-0x1000000.c -lwiringPi -lrt -lstdc++
+icezprog-0x100000: icezprog-0x100000.c
+	gcc -o icezprog-0x100000 -Wall icezprog-0x100000.c -lwiringPi -lrt -lstdc++
 
-icezprog-0x830000: icezprog-0x830000.c
-	gcc -o icezprog-0x830000 -Wall icezprog-0x830000.c -lwiringPi -lrt -lstdc++
+icezprog-0x30000: icezprog-0x30000.c
+	gcc -o icezprog-0x30000 -Wall icezprog-0x30000.c -lwiringPi -lrt -lstdc++
+
+icezprog-0x20000: icezprog-0x20000.c
+	gcc -o icezprog-0x20000 -Wall icezprog-0x20000.c -lwiringPi -lrt -lstdc++
 
 install_icezprog: icezprog
-	cp icezprog /usr/local/bin/icezprog
+	cp icezprog          /usr/local/bin/
+	cp icezprog-0x20000  /usr/local/bin/
+	cp icezprog-0x30000  /usr/local/bin/
+	cp icezprog-0x100000 /usr/local/bin/
 
 icezero.blif: icezero.v memdata.dat defines.vh
 	yosys -p 'synth_ice40 -top top -blif icezero.blif' icezero.v
@@ -39,6 +50,10 @@ testbench: testbench.v icezero.v
 
 testbench.vcd: testbench
 	./testbench
+
+clean-progs:
+	rm -f bbiceprog icezprog icezprog-0x20000 icezprog-0x30000 icezprog-0x100000
+
 
 clean:
 	rm -f testbench testbench.vcd
